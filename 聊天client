@@ -1,0 +1,19 @@
+import socket
+import sys
+
+# 创建一个socket
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+# 建立连接
+s.connect(('127.0.0.1', 9999))
+while True:
+    # 发送数据:
+    try:
+        data = input("客户端说:")
+        s.send(data.encode())
+        buf = s.recv(1024).decode()
+        if buf != 'exit':
+            print("服务端说: " + buf)
+    except:
+        print("Dialogue Over")
+        s.close()
+        sys.exit(0)
